@@ -16,3 +16,30 @@ sudo dpkg -id *.deb
 #### Validate if iperf3 is running as a server
 
 ps -aux | grep 'iperf3 -s'
+
+#### iperf service - Not needed as sudo systemctl enable iperf3 and sudo systemctl start iperf3 seems to work fine
+### Create new service
+
+sudo nano /etc/systemd/system/iperf3.service
+
+Add the following content:
+
+[Unit]
+Description=iPerf3 Server
+
+[Service]
+ExecStart=/usr/bin/iperf3 -s
+
+[Install]
+WantedBy=multi-user.target
+
+
+##
+
+sudo systemctl daemon-reload
+
+sudo systemctl enable iperf3
+sudo systemctl start iperf3
+
+sudo systemctl status iperf3
+
